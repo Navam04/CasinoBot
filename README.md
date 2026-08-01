@@ -6,7 +6,9 @@ leaderboards, daily rewards, transfers, statistics, and optional reminders.
 
 It can also publish the prompt from [Daily Dilemma](https://dailydilemma.fun)
 to a channel in each server, helping the daily question travel between
-communities. No real money or cryptocurrency is involved.
+communities. Daily Dilemma announcements are completely optional and can be
+enabled or disabled independently of the casino reminder. No real money or
+cryptocurrency is involved.
 
 ## How deployment works
 
@@ -77,10 +79,20 @@ Server administrators configure optional announcements through slash commands:
 /casino setup timezone timezone:America/Toronto
 ```
 
-Run either channel command without selecting a channel to disable that feature.
-Daily Dilemma prompts publish shortly after 12:05 AM in the configured timezone;
-casino reminders publish during the 9 PM hour. Members can opt out of reminder
-mentions with `/casino notifications setting:Off`.
+Daily Dilemma announcements and casino reminders are separate, optional
+features. Run either channel command without selecting a channel to disable
+that feature.
+
+If you enable Daily Dilemma, selecting your server's general channel is greatly
+appreciated so everyone can see and discuss the daily prompt. Pass that channel
+to `/casino setup dilemma-channel`; CasinoBot stores its channel ID for the
+server automatically. Daily Dilemma prompts publish shortly after 12:05 AM in
+the configured timezone. Readers can also visit
+[dailydilemma.fun](https://dailydilemma.fun) directly to answer and view the
+results.
+
+Casino reminders publish separately during the 9 PM hour. Members can opt out
+of reminder mentions with `/casino notifications setting:Off`.
 
 `DAILY_DILEMMA_API_KEY` is optional. Without it, the prompt, choices, and link
 still appear, but members vote on the Daily Dilemma website instead of using
