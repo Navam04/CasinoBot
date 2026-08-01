@@ -1,0 +1,18 @@
+[Unit]
+Description=CasinoBot Discord bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/casinobot
+EnvironmentFile=/opt/casinobot/.env
+ExecStartPre=/usr/bin/npm run db:migrate
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+RestartSec=5
+User=casinobot
+Group=casinobot
+
+[Install]
+WantedBy=multi-user.target

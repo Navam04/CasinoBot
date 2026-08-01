@@ -3,6 +3,12 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Node, TypeScript, Prisma, and runtime data
+node_modules/
+dist/
+generated/
+data/
+
 # C extensions
 *.so
 
@@ -149,6 +155,8 @@ activemq-data/
 
 # Environments
 .env
+.env.*
+!.env.example
 .envrc
 .venv
 env/

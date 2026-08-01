@@ -1,0 +1,12 @@
+services:
+  casinobot:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: file:/data/casinobot.db
+    volumes:
+      - casinobot-data:/data
+
+volumes:
+  casinobot-data:

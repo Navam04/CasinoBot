@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model GuildSetting {
+  guildId                 String   @id
+  timezone                String   @default("America/Toronto")
+  dilemmaChannelId        String?
+  casinoReminderChannelId String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+}
+
+model CasinoAccount {
+  id                    Int       @id @default(autoincrement())
+  guildId               String
+  userId                String
+  balance               Int       @default(1000)
+  activeBlackjackGameId Int?
+  lastDailyAt           DateTime?
+  lastGambledAt         DateTime?
+  remindersEnabled      Boolean   @default(true)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@unique([guildId, userId])
+  @@index([guildId, balance])
+  @@index([guildId, lastGambledAt])
+}
+
+model BlackjackGame {
+  id         Int       @id @default(autoincrement())
+  operationId String?  @unique
+  guildId    String
+  userId     String
+  wager      Int
+  status     String    @default("ACTIVE")
+  deck       String
+  playerHand String
+  dealerHand String
+  payout     Int       @default(0)
+  version    Int       @default(0)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  finishedAt DateTime?
+
+  @@index([guildId, userId, status])
+}
+
+model CasinoTransaction {
+  id           Int      @id @default(autoincrement())
+  operationId  String?  @unique
+  guildId      String
+  userId       String
+  game         String
+  type         String
+  wager        Int      @default(0)
+  payout       Int      @default(0)
+  delta        Int
+  balanceAfter Int
+  details      String?
+  createdAt    DateTime @default(now())
+
+  @@index([guildId, userId, createdAt])
+}
+
+model CasinoAnnouncement {
+  id        Int       @id @default(autoincrement())
+  guildId   String
+  localDate String
+  channelId String
+  messageId String?
+  status    String    @default("PENDING")
+  createdAt DateTime  @default(now())
+  sentAt    DateTime?
+
+  @@unique([guildId, localDate])
+}
+
+model IntegrationState {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,4 @@
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import type { BlackjackState } from "../services/blackjack/blackjackService.js";
+export function dailyDilemmaVoteButtons(pollId: number) { return new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId(`daily-dilemma:vote:red:${pollId}`).setLabel("Option A").setStyle(ButtonStyle.Danger), new ButtonBuilder().setCustomId(`daily-dilemma:vote:blue:${pollId}`).setLabel("Option B").setStyle(ButtonStyle.Primary)); }
+export function blackjackControls(game: BlackjackState) { const done = game.status !== "ACTIVE"; return new ActionRowBuilder<ButtonBuilder>().addComponents(new ButtonBuilder().setCustomId(`blackjack:hit:${game.id}`).setLabel("Hit").setStyle(ButtonStyle.Primary).setDisabled(done), new ButtonBuilder().setCustomId(`blackjack:stand:${game.id}`).setLabel("Stand").setStyle(ButtonStyle.Secondary).setDisabled(done)); }
